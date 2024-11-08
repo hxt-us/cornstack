@@ -1,5 +1,5 @@
 
-# 🌽 CORNSTACK: A HIGH-QUALITY CONTRASTIVE DATASET FOR BETTER CODE RETRIEVAL AND RERANKING
+# 🌽 CoRNStack: A High-Quality Contrastive Dataset for Better Code Ranking.
 
 <p align="left">
     ℹ️&nbsp;<a href="#-about">About</a>
@@ -11,9 +11,9 @@
 
 
 ## ℹ️ About
-* 🌽 **CORNSTACK** is a large-scale high-quality (text, code) pairs dataset for training and fine-tuning embedding models and re-rankers for code retrieval via contrastive learning. 
-* We train **CodeRankEmbed**, a 137M bi-encoder, on 🌽 **CORNSTACK** and demonstrate considerably higher performance on a variety of code retrieval benchmarks, with substantial gains over current state-of-the-art code embedding models.
-* By leveraging 🌽 **CORNSTACK**, we are the first to finetune LLMs as code rerankers. **CodeRankLLM**, our 7B code reranker, considerably improves performance over the retriever.
+* 🌽 **CoRNStack** is a large-scale high-quality (text, code) pairs dataset for training and fine-tuning embedding models and re-rankers for code retrieval via contrastive learning. 
+* We train **CodeRankEmbed**, a 137M bi-encoder, on 🌽 **CoRNStack** and demonstrate considerably higher performance on a variety of code retrieval benchmarks, with substantial gains over current state-of-the-art code embedding models.
+* By leveraging 🌽 **CoRNStack**, we are the first to finetune LLMs as code rerankers. **CodeRankLLM**, our 7B code reranker, considerably improves performance over the retriever.
 
 
 ## 📖 More About CORNSTACK
