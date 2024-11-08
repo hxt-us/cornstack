@@ -38,14 +38,18 @@ To reproduce the performance of **CodeRankEmbed** on popular code retrieval benc
 
 ### COIR Evaluation
 ```
-bash evaluation/eval_coir.py
+cd src/
+python evaluation/eval_coir.py
 ```
 
 ### CSN Evaluation
 
 ```
-bash evaluation/eval_csn.py
+cd src/
+python create/csn.py
+python evaluation/eval_csn.py
 ```
 
+We plan to release the full training and dataset curation code soon!
 
 
