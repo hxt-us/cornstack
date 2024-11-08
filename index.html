@@ -112,7 +112,7 @@
               </span>
               <!-- Code Link. -->
               <span class="link-block">
-                <a href="https://github.com/gangiswag/infogent"
+                <a href="https://github.com/gangiswag/cornstack"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fab fa-github"></i>
@@ -120,9 +120,35 @@
                   <span>Code</span>
                 </a>
               </span>
+              <!-- Model Link. -->
+              <span class="link-block">
+                <a href="https://huggingface.co/nomic-uiuc/CodeRankEmbed"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <p style="font-size:18px">🤗</p>
+                  </span>
+                  <span>CodeRankEmbed</span>
+                </a>
+              <!-- Model Link. -->
+              <span class="link-block">
+                <a href="https://huggingface.co/nomic-uiuc/CodeRankLLM"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <p style="font-size:18px">🤗</p>
+                  </span>
+                  <span>CodeRankLLM</span>
+                </a>
+                <span class="link-block">
+                  <a href=""
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <p style="font-size:18px">🤗</p>
+                  </span>
+                  <span>Dataset Coming Soon!</span>
+                </a>
               <!-- Demo link. -->
               <span class="link-block">
-                <a href="https://notebooklm.google.com/notebook/720d2f64-fdd2-47e2-a086-7870b8db23e5/audio"
+                <a href="https://notebooklm.google.com/notebook/6c34937f-40ec-4559-9c8a-2043d5b6e612/audio"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                     <p style="font-size:18px">&#127911;</p>
@@ -166,7 +192,7 @@
             <b>Contribution:</b> To tackle this, we introduce CoRNStack, a large-scale, high-quality training dataset designed specifically for code retrieval across multiple programming languages. CoRNStack is curated to remove noisy data and includes challenging examples that improve learning. The dataset, which comprises instances of the form of <i>&lt;query, positive, negatives&gt;</i>, supports training code retrieval and reranking models.
             <br>
             <br>
-            <b>Results:</b> With contrastive training on CoRNStack, our code retriever model (CodeRankEmbed) achieves state-of-the-art results across diverse code retrieval tasks. Our fine-tuned reranking model (CodeRankLLM) further enhances the quality of retrieved results, and when combined with our code retriever, it significantly improves the accuracy of finding relevant functions in GitHub issues—a key need in real-world software development.
+            <b>Results:</b> With contrastive training on CoRNStack, our code retriever model (<a href="https://huggingface.co/nomic-uiuc/CodeRankEmbed">CodeRankEmbed</a>) achieves state-of-the-art results across diverse code retrieval tasks. Our fine-tuned reranking model (<a href="https://huggingface.co/nomic-uiuc/CodeRankLLM">CodeRankLLM</a>) further enhances the quality of retrieved results, and when combined with our code retriever, it significantly improves the accuracy of finding relevant functions in GitHub issues—a key need in real-world software development.
           </p>
         </div>
         <figure>
@@ -214,7 +240,7 @@
         <h2 class="title is-3">CodeRankEmbed Retriever</h2>
         <div class="content has-text-justified">
           <p>
-            <b>Model:</b>  We use a bi-encoder architecture for our retriever, with weights shared between the text and code encoder. The retriever is trained using , we employ a contrastive learning objective based on the InfoNCE loss. The encoder is initialized with <a href="https://huggingface.co/Snowflake/snowflake-arctic-embed-m-long">Arctic-Embed-M-Long</a>, a text encoder supporting an extended context length of 8,192 tokens and pretrained on large-scale web query-document pairs, along with public text retrieval datasets. We name our trained code retriever as <a href="">CodeRankEmbed</a>. 
+            <b>Model:</b>  We use a bi-encoder architecture for our retriever, with weights shared between the text and code encoder. The retriever is trained using , we employ a contrastive learning objective based on the InfoNCE loss. The encoder is initialized with <a href="https://huggingface.co/Snowflake/snowflake-arctic-embed-m-long">Arctic-Embed-M-Long</a>, a text encoder supporting an extended context length of 8,192 tokens and pretrained on large-scale web query-document pairs, along with public text retrieval datasets. We release our trained code retriever as <a href="https://huggingface.co/nomic-uiuc/CodeRankEmbed">CodeRankEmbed</a>. 
           </p>
           <p>
             <b>Evaluation Datasets:</b>   We evaluate CodeRankEmbed on a variety of code retrieval tasks under zero-shot settings. We use <a href="https://arxiv.org/abs/1909.09436">CodeSearchNet</a> as the benchmark for function-level text-to-code retrieval, a semantic search task where natural language queries are used to retrieve relevant code snippets. Additionally, to evaluate performance across diverse code retrieval tasks, we use the <a href="https://arxiv.org/pdf/2407.02883">CoIR</a> benchmark, which includes text-to-code, code-to-text, code-to-code, and hybrid code retrieval tasks (retrieving a hybrid of code and textual documents given a hybrid query).
@@ -226,8 +252,14 @@
           <p>
             <b>Results:</b>   Our code retriever, despite being smaller than the majority of the baselines, significantly outperforms all open-source and proprietary code embedding models, establishing a new state-of-the-art for code embedding tasks. This demonstrates the robustness of our contrastive training data, with the trained model exhibiting superior cross-task generalization on COIR despite being trained exclusively for only text-to-code retrieval.
           </p>
-          <figure>
+          <!-- <figure>
             <img src="static/images/full_Code_embed.png" alt="CodeRankEmbed Results" class="CodeRankEmbed"/>
+          </figure> -->
+          <figure>
+            <img src="static/images/coir.png" alt="CoIR Results" class="coir" style="width: 70%;"/>
+          </figure>
+          <figure>
+            <img src="static/images/codesearchnet.png" alt="CodeSearchNet Results" class="codesearchnet" style="width: 70%;"/>
           </figure>
         </div>      
   </div>
@@ -240,7 +272,7 @@
         <h2 class="title is-3">CodeRankLLM Reranker</h2>
         <div class="content has-text-justified">
           <p>
-            <b>Model:</b>  Our code reranker is based on LLM-based listwise reranking, which has gained prominence for the ability to score multiple passages simultaneously. Training data for listwise reranking was generated by selecting 50,000 <i>&lt;query, positive, negatives&gt;</i> tuples from CoRNStack, filtered to ensure higher similarity scores and better ranks for the positives. Since CoRNStack doesn't contain the ranked ordering data required for training listwise rerankers, we leverage <a href="https://arxiv.org/pdf/2407.02883">Qwen-2.5-32B-Instruct</a> LLM provided ranked orderings for each example to serve as ranking supervision. We train the reranker using a language modeling objective that minimizes the prediction error of the next token in the sequence. We name our trained code reranker as <a href="">CodeRankLLM</a>. 
+            <b>Model:</b>  Our code reranker is based on LLM-based listwise reranking, which has gained prominence for the ability to score multiple passages simultaneously. Training data for listwise reranking was generated by selecting 50,000 <i>&lt;query, positive, negatives&gt;</i> tuples from CoRNStack, filtered to ensure higher similarity scores and better ranks for the positives. Since CoRNStack doesn't contain the ranked ordering data required for training listwise rerankers, we leverage <a href="https://arxiv.org/pdf/2407.02883">Qwen-2.5-32B-Instruct</a> LLM provided ranked orderings for each example to serve as ranking supervision. We train the reranker using a language modeling objective that minimizes the prediction error of the next token in the sequence. We release our trained code reranker as <a href="https://huggingface.co/nomic-uiuc/CodeRankLLM">CodeRankLLM</a>. 
           </p>
           <br>
           <p>
@@ -277,12 +309,18 @@
             <b>Baselines and Metrics:</b> Our main baseline, <a href="https://arxiv.org/pdf/2407.01489">Agentless</a>, is an automated tool for tackling software development issues and is a top open-source performer on SWE-Bench-Lite. It operates in two phases: localization and repair. In localization, Agentless first identifies relevant files, then narrows down to specific classes, functions, and edit locations. Given the size of codebases, it uses file location information and GitHub issues to rank files that may need updates, then pinpoints functions needing changes within these files. Since Agentless selects up to three files for edits and localizes functions within them, we evaluate file localization at top 1–3 and function localization at top 5-10. We also compare against code retrieval baselines, excluding proprietary ones due to API costs.
           </p>
           <p>
-            <b>Results:</b> Our code retriever significantly outperforms Agentless and other retrieval baselines in function localization accuracy. Applying our code reranker over the retriever results yields consistent improvements in both file and function localization. We hypothesize that our retrieval-based approach could achieve greater improvements on private repositories, which are typically not included in LLM pretraining data, and we leave this investigation for future work.
+            <b>Results:</b> Our code retriever significantly outperforms Agentless and other retrieval baselines in function localization accuracy. Applying our code reranker over the retriever results yields consistent improvements in both file and function localization. While SWE-Bench-Lite is constructed from popular open-source Python repositories, we hypothesize that our retrieval-based approach could achieve greater improvements on private repositories, which are typically not included in LLM pretraining data, and we leave this investigation for future work.
           </p>
           <figure>
-            <img src="static/images/swebench.png" alt="SWE-Bench Results" class="swebench"/>
+            <img src="static/images/file_level.png" alt="SWE-Bench File-Level Results" class="file_level" style="width: 70%;"/>
             <figcaption class="has-text-centered">
-              <b>Figure 3:</b> File and function localization performance (%) on SWE-Bench-Lite.
+              <b>Figure 2:</b> File localization performance (%) on SWE-Bench-Lite.
+            </figcaption>
+          </figure>
+          <figure>
+            <img src="static/images/function_level.png" alt="SWE-Bench Function-Level Results" class="function_level" style="width: 70%;"/>
+            <figcaption class="has-text-centered">
+              <b>Figure 3:</b> Function localization performance (%) on SWE-Bench-Lite.
             </figcaption>
           </figure>
         </div>  
