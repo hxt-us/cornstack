@@ -122,7 +122,7 @@
               </span>
               <!-- Model Link. -->
               <span class="link-block">
-                <a href="https://huggingface.co/nomic-uiuc/CodeRankEmbed"
+                <a href="https://huggingface.co/cornstack/CodeRankEmbed"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <p style="font-size:18px">🤗</p>
@@ -131,7 +131,7 @@
                 </a>
               <!-- Model Link. -->
               <span class="link-block">
-                <a href="https://huggingface.co/nomic-uiuc/CodeRankLLM"
+                <a href="https://huggingface.co/cornstack/CodeRankLLM"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <p style="font-size:18px">🤗</p>
@@ -192,7 +192,7 @@
             <b>Contribution:</b> To tackle this, we introduce CoRNStack, a large-scale, high-quality training dataset designed specifically for code retrieval across multiple programming languages. CoRNStack is curated to remove noisy data and includes challenging examples that improve learning. The dataset, which comprises instances of the form of <i>&lt;query, positive, negatives&gt;</i>, supports training code retrieval and reranking models.
             <br>
             <br>
-            <b>Results:</b> With contrastive training on CoRNStack, our code retriever model (<a href="https://huggingface.co/nomic-uiuc/CodeRankEmbed">CodeRankEmbed</a>) achieves state-of-the-art results across diverse code retrieval tasks. Our fine-tuned reranking model (<a href="https://huggingface.co/nomic-uiuc/CodeRankLLM">CodeRankLLM</a>) further enhances the quality of retrieved results, and when combined with our code retriever, it significantly improves the accuracy of finding relevant functions in GitHub issues—a key need in real-world software development.
+            <b>Results:</b> With contrastive training on CoRNStack, our code retriever model (<a href="https://huggingface.co/cornstack/CodeRankEmbed">CodeRankEmbed</a>) achieves state-of-the-art results across diverse code retrieval tasks. Our fine-tuned reranking model (<a href="https://huggingface.co/cornstack/CodeRankLLM">CodeRankLLM</a>) further enhances the quality of retrieved results, and when combined with our code retriever, it significantly improves the accuracy of finding relevant functions in GitHub issues—a key need in real-world software development.
           </p>
         </div>
         <figure>
@@ -240,7 +240,7 @@
         <h2 class="title is-3">CodeRankEmbed Retriever</h2>
         <div class="content has-text-justified">
           <p>
-            <b>Model:</b>  We use a bi-encoder architecture for our retriever, with weights shared between the text and code encoder. The retriever is trained using a contrastive learning objective based on the InfoNCE loss. The encoder is initialized with <a href="https://huggingface.co/Snowflake/snowflake-arctic-embed-m-long">Arctic-Embed-M-Long</a>, a text encoder supporting an extended context length of 8,192 tokens and pretrained on large-scale web query-document pairs, along with public text retrieval datasets. We release our trained code retriever as <a href="https://huggingface.co/nomic-uiuc/CodeRankEmbed">CodeRankEmbed</a>. 
+            <b>Model:</b>  We use a bi-encoder architecture for our retriever, with weights shared between the text and code encoder. The retriever is trained using a contrastive learning objective based on the InfoNCE loss. The encoder is initialized with <a href="https://huggingface.co/Snowflake/snowflake-arctic-embed-m-long">Arctic-Embed-M-Long</a>, a text encoder supporting an extended context length of 8,192 tokens and pretrained on large-scale web query-document pairs, along with public text retrieval datasets. We release our trained code retriever as <a href="https://huggingface.co/cornstack/CodeRankEmbed">CodeRankEmbed</a>. 
           </p>
           <p>
             <b>Evaluation Datasets:</b>   We evaluate CodeRankEmbed on a variety of code retrieval tasks under zero-shot settings. We use <a href="https://arxiv.org/abs/1909.09436">CodeSearchNet</a> as the benchmark for function-level text-to-code retrieval, a semantic search task where natural language queries are used to retrieve relevant code snippets. Additionally, to evaluate performance across diverse code retrieval tasks, we use the <a href="https://arxiv.org/pdf/2407.02883">CoIR</a> benchmark, which includes text-to-code, code-to-text, code-to-code, and hybrid code retrieval tasks (retrieving a hybrid of code and textual documents given a hybrid query).
@@ -272,7 +272,7 @@
         <h2 class="title is-3">CodeRankLLM Reranker</h2>
         <div class="content has-text-justified">
           <p>
-            <b>Model:</b>  Our code reranker is based on LLM-based listwise reranking, which has gained prominence for the ability to score multiple passages simultaneously. Training data for listwise reranking was generated by selecting 50,000 <i>&lt;query, positive, negatives&gt;</i> tuples from CoRNStack, filtered to ensure higher similarity scores and better ranks for the positives. Since CoRNStack doesn't contain the ranked ordering data required for training listwise rerankers, we leverage <a href="https://arxiv.org/pdf/2407.02883">Qwen-2.5-32B-Instruct</a> LLM provided ranked orderings for each example to serve as ranking supervision. We train the reranker using a language modeling objective that minimizes the prediction error of the next token in the sequence. We release our trained code reranker as <a href="https://huggingface.co/nomic-uiuc/CodeRankLLM">CodeRankLLM</a>. 
+            <b>Model:</b>  Our code reranker is based on LLM-based listwise reranking, which has gained prominence for the ability to score multiple passages simultaneously. Training data for listwise reranking was generated by selecting 50,000 <i>&lt;query, positive, negatives&gt;</i> tuples from CoRNStack, filtered to ensure higher similarity scores and better ranks for the positives. Since CoRNStack doesn't contain the ranked ordering data required for training listwise rerankers, we leverage <a href="https://arxiv.org/pdf/2407.02883">Qwen-2.5-32B-Instruct</a> LLM provided ranked orderings for each example to serve as ranking supervision. We train the reranker using a language modeling objective that minimizes the prediction error of the next token in the sequence. We release our trained code reranker as <a href="https://huggingface.co/cornstack/CodeRankLLM">CodeRankLLM</a>. 
           </p>
           <br>
           <p>
