@@ -24,7 +24,7 @@ def set_seed(seed=42):
 
 
 def evaluate(lang):
-    model = SentenceTransformer("cornstack/CodeEmbed", trust_remote_code= True).to('cuda').to(torch.bfloat16)
+    model = SentenceTransformer("cornstack/CodeRankEmbed", trust_remote_code= True).to('cuda').to(torch.bfloat16)
     
     corpus, queries, qrels = GenericDataLoader(
                 data_folder=os.path.join("datasets/", f'csn_{lang}')

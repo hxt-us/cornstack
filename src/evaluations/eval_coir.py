@@ -5,8 +5,8 @@ from beir.retrieval import models
 import torch
 
 contrast_encoder = models.SentenceBERT()
-contrast_encoder.q_model = SentenceTransformer("cornstack/CodeEmbed", trust_remote_code= True)
-contrast_encoder.doc_model = SentenceTransformer("cornstack/CodeEmbed", trust_remote_code= True)
+contrast_encoder.q_model = SentenceTransformer("cornstack/CodeRankEmbed", trust_remote_code= True)
+contrast_encoder.doc_model = SentenceTransformer("cornstack/CodeRankEmbed", trust_remote_code= True)
 contrast_encoder.q_model.max_seq_length = 512
 contrast_encoder.doc_model.max_seq_length = 512
 
