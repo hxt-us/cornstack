@@ -245,7 +245,7 @@ if __name__ == "__main__":
     parser.add_argument("--dataset_dir", type=str, default="datasets",
                         help="Specify the filepath where the dataset is storied")
     parser.add_argument('--tok', default= False, type = bool)
-    parser.add_argument('--add_prefix', default= False, type = bool)
+    parser.add_argument('--add_prefix', default= True, type = bool)
     parser.add_argument('--query_prefix', default= 'Represent this query for searching relevant code', type = str)
     parser.add_argument('--document_prefix', default= '', type = str)
     args = parser.parse_args()
