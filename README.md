@@ -50,6 +50,16 @@ python create/csn.py
 python evaluation/eval_csn.py
 ```
 
+### SWE-Bench-Lite Evaluation
+
+```
+cd src/
+python create/swebench.py
+python evaluation/eval_swebench.py
+python evaluation/eval_localization.py --level file  #print out file localization top-k results
+python evaluation/eval_localization.py --level function  #print out function localization top-k results
+```
+
 We plan to release the full training and dataset curation code soon!
 
 
