@@ -22,18 +22,7 @@ scripts/reddit/downloaded/*
 *.jsonl
 *.gz
 *.parquet
-Agentless/results/
-Agentless/playground/
-
-code-rag-bench/retrieval/cache/
-code-rag-bench/retrieval/results/
-code-rag-bench/retrieval/output/
-code-rag-bench/retrieval/ds/
-code-rag-bench/retrieval/datasets/*
-!code-rag-bench/retrieval/datasets/canonical/
-code-rag-bench/retrieval/datasets/canonical/*
-!contrastors-code/src/contrastors/configs/data/code_finetune_triplets.yaml
-!contrastors-code/src/contrastors/configs/data/code_finetune_triplets.yaml
+datasets/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

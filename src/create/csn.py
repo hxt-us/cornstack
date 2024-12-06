@@ -8,7 +8,7 @@ import subprocess
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--output_dir", type=str, default="datasets")
+    parser.add_argument("--dataset_dir", type=str, default="datasets")
 
     args = parser.parse_args()
     
@@ -23,7 +23,7 @@ def main():
 
     #[subprocess.run(command, shell=True, check=True) for command in commands]
     for lang in ['python', 'java', 'ruby', 'php', 'javascript', 'go']:
-        path = Path(f'{args.output_dir}/csn_{lang}')
+        path = Path(f'{args.dataset_dir}/csn_{lang}')
         path.mkdir(parents=True, exist_ok=True)
         qrels_path = Path(f'{path}/qrels')
         qrels_path.mkdir(parents=True, exist_ok=True)

@@ -8,6 +8,7 @@ import json
 import numpy as np
 from sentence_transformers import SentenceTransformer
 from beir.datasets.data_loader import GenericDataLoader
+import fire
 
 logger = logging.getLogger(__name__)
 
@@ -23,11 +24,11 @@ def set_seed(seed=42):
 
 
 
-def evaluate(lang):
-    model = SentenceTransformer("cornstack/CodeRankEmbed", trust_remote_code= True).to('cuda').to(torch.bfloat16)
+def evaluate(device, lang, batch_size, dataset_dir):
+    model = SentenceTransformer( "cornstack/CodeRankEmbed", trust_remote_code= True).to(device).to(torch.bfloat16)
     
     corpus, queries, qrels = GenericDataLoader(
-                data_folder=os.path.join("datasets/", f'csn_{lang}')
+                data_folder=os.path.join(dataset_dir, f'csn_{lang}')
             ).load(split="test")
     
 
@@ -37,8 +38,8 @@ def evaluate(lang):
     qs = [ex[1] for ex in query_examples]
     cs = [ex[1] for ex in code_examples]
     
-    nl_vecs = model.encode(qs, show_progress_bar= True, batch_size= 64)
-    code_vecs = model.encode(cs, show_progress_bar= True, batch_size= 64)
+    nl_vecs = model.encode(qs, show_progress_bar= True, batch_size= batch_size)
+    code_vecs = model.encode(cs, show_progress_bar= True, batch_size= batch_size)
 
 
     scores = np.matmul(nl_vecs, code_vecs.T)
@@ -70,19 +71,20 @@ def evaluate(lang):
     return mrr
 
 
-set_seed(42)
-Path('results/csn').mkdir(parents=True, exist_ok=True)
+def main(device = 'cuda', output_dir = 'results', dataset_dir = 'datasets', batch_size = 64):
+    set_seed(42)
+    Path(f'{output_dir}/csn').mkdir(parents=True, exist_ok=True)
 
-for lang in ['python', 'java', 'ruby', 'php', 'javascript', 'go']:
-    mrr = evaluate(lang)
-    print(f'{lang} MRR', mrr)
+    for lang in ['python', 'java', 'ruby', 'php', 'javascript', 'go']:
+        mrr = evaluate(device, lang, batch_size, dataset_dir)
+        print(f'{lang} MRR', mrr)
 
-    result_data = {
-        "language": lang,
-    }
+        result_data = {
+            "language": lang,
+        }
 
-    with open(f"results/csn/overall_results.jsonl", 'a') as f:
-        f.write(json.dumps({**result_data, **{'mrr': mrr}}) + "\n")
+        with open(f"{output_dir}/csn/overall_results.jsonl", 'a') as f:
+            f.write(json.dumps({**result_data, **{'mrr': mrr}}) + "\n")
 
-
-
+if __name__ == "__main__":
+    fire.Fire(main)
