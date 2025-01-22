@@ -49,6 +49,7 @@ cd src/
 python create/csn.py
 python evaluation/eval_csn.py
 ```
+Ignore any errors when running `python create/csn.py`.
 
 ### SWE-Bench-Lite Evaluation
 
