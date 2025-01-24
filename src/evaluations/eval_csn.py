@@ -24,11 +24,11 @@ def set_seed(seed=42):
 
 
 
-def evaluate(device, lang, batch_size, dataset_dir):
+def evaluate(device, lang, batch_size, dataset_dir, output_dir):
     model = SentenceTransformer( "cornstack/CodeRankEmbed", trust_remote_code= True).to(device).to(torch.bfloat16)
     
     corpus, queries, qrels = GenericDataLoader(
-                data_folder=os.path.join(dataset_dir, f'csn_{lang}')
+                data_folder=os.path.join(dataset_dir, "code_datasets", f'csn_{lang}')
             ).load(split="test")
     
 
@@ -51,6 +51,16 @@ def evaluate(device, lang, batch_size, dataset_dir):
     nl_ids = [ex[0] for ex in query_examples]
     code_ids = [ex[0] for ex in code_examples]
 
+    # Save retrieval results in rank format
+    rank_file = os.path.join(output_dir, f'csn_{lang}', 'rank.tsv')
+    os.makedirs(os.path.dirname(rank_file), exist_ok=True)
+    
+    with open(rank_file, 'w') as f:
+        for query_idx, (query_id, sort_id) in enumerate(zip(nl_ids, sort_ids)):
+            for rank, doc_idx in enumerate(sort_id[:1000]):  # Save top 1000 results
+                doc_id = code_ids[doc_idx]
+                score = float(scores[query_idx][doc_idx])
+                f.write(f"{query_id}\t{doc_id}\t{score}\n")
 
     ranks = []
     for url, sort_id in zip(nl_ids, sort_ids):
@@ -66,8 +76,7 @@ def evaluate(device, lang, batch_size, dataset_dir):
         else:
             ranks.append(0)
 
-    mrr =  float(np.mean(ranks))
-    
+    mrr = float(np.mean(ranks))
     return mrr
 
 
@@ -76,7 +85,7 @@ def main(device = 'cuda', output_dir = 'results', dataset_dir = 'datasets', batc
     Path(f'{output_dir}/csn').mkdir(parents=True, exist_ok=True)
 
     for lang in ['python', 'java', 'ruby', 'php', 'javascript', 'go']:
-        mrr = evaluate(device, lang, batch_size, dataset_dir)
+        mrr = evaluate(device, lang, batch_size, dataset_dir, output_dir)
         print(f'{lang} MRR', mrr)
 
         result_data = {
