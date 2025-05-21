@@ -25,7 +25,7 @@ def set_seed(seed=42):
 
 
 def evaluate(device, lang, batch_size, dataset_dir, output_dir):
-    model = SentenceTransformer( "cornstack/CodeRankEmbed", trust_remote_code= True, device_map="auto").to(device).to(torch.bfloat16)
+    model = SentenceTransformer( "nomic-ai/CodeRankEmbed", trust_remote_code= True).to(device).to(torch.bfloat16)
     
     corpus, queries, qrels = GenericDataLoader(
                 data_folder=os.path.join(dataset_dir, "code_datasets", f'csn_{lang}')
