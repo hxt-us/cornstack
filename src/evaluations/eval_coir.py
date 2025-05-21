@@ -9,7 +9,7 @@ from utils import Retriever
 
  #ran with 512 seq length for fair comparison against baselines following CoIR paper although higher seq length may yield better pfm
 def main(tasks = 'all', output_dir = 'results', batch_size = 256, max_seq_length = 512):
-    st = SentenceTransformer("cornstack/CodeRankEmbed", trust_remote_code= True).to(torch.bfloat16)
+    st = SentenceTransformer("cornstack/CodeRankEmbed", trust_remote_code= True, device_map = 'auto').to(torch.bfloat16)
     st.max_seq_length = max_seq_length
     contrast_encoder = Retriever(st, add_prefix= True)
 
